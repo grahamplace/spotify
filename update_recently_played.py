@@ -13,7 +13,7 @@ def get_recent_items( sp, limit = 50 ):
 if len(sys.argv) > 1:
     username = sys.argv[1]
 else:
-    print "Usage: " + (sys.argv[0]) + " username"
+    print 'Usage: scriptname.py username'
     sys.exit()
 
 scope = 'playlist-modify-public'
