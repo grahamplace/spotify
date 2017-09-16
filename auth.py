@@ -10,6 +10,8 @@ import spotipy.util as util
 
 client_id = c_id
 client_secret = c_secret
+
+# python -m SimpleHTTPServer 8888
 redirect_uri = 'http://localhost:8888/callback/'
 
 scope = 'user-library-read user-read-recently-played user-read-currently-playing user-modify-playback-state '
