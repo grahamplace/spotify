@@ -51,7 +51,7 @@ if token:
     # UPDATE FINAL PLAYLIST OF 100, DONT ADD DUPLICATE ALBUMS
     final_tracks = tracks
     final_albums = albums
-    for a, t in current.iteritems():
+    for a, t in current.items():
         if a not in final_albums:
             final_albums.append(a)
             final_tracks.append(t)
