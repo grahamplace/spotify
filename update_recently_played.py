@@ -13,7 +13,7 @@ def get_recent_items( sp, limit = 50 ):
 if len(sys.argv) > 1:
     username = sys.argv[1]
 else:
-    print 'Usage: scriptname.py username'
+    print ("Usage: %s username playlist_id track_id ..." % (sys.argv[0],))
     sys.exit()
 
 scope = 'playlist-modify-public'
@@ -60,4 +60,4 @@ if token:
 
     sp.user_playlist_replace_tracks(username, playlist_id, final_tracks )
 else:
-    print "Can't get token for", username
+    print ("Can't get token for " + username)
