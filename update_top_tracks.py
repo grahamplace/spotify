@@ -5,8 +5,9 @@ import spotipy
 import spotipy.util as util
 
 
-def get_recent_items( sp, limit = 50 ):
-   results = sp._get("me/player/recently-played", limit=limit)
+def get_top_tracks( sp, limit = 50 ):
+   r = 'long_term'
+   results = sp.current_user_top_tracks(time_range=r, limit=50)
    items = results['items']
    return items
 
@@ -22,42 +23,14 @@ token = util.prompt_for_user_token(username, scope)
 if token:
     sp = spotipy.Spotify(auth=token)
     sp.trace = False
-    playlist_id = '4XW1C9qdMjf0xbEsL1r7Zy'
+    playlist_id = '7sJlGU5BLOXA5R5b8IqKrm'
 
-    # GET RECENT PLAYS
-    items = get_recent_items(sp, 50)
-    albums = []
+    # GET CURRENT TOP TRACKS
+    items = get_top_tracks(sp, 50)
     tracks = []
-    future = {}
     for i in items:
-        track = i['track']
-        album_uri = track['album']['uri']
-        if album_uri not in albums:
-            albums.append(album_uri)
-            tracks.append(track['uri'].replace('spotify:track:', ''))
-            future[ album_uri ] = track['uri'].replace('spotify:track:', '')
+        tracks.append(i['uri'].replace('spotify:track:', ''))
 
-    # GET CURRENT PLAYLIST
-    results = sp.user_playlist(username, playlist_id)
-    current_items = results['tracks']['items']
-    total_current = results['tracks']['total']
-
-    current = {}
-    for i in current_items:
-        track = i['track']
-        album_uri = track['album']['uri']
-        current[ album_uri ] = track['uri'].replace('spotify:track:', '')
-
-    # UPDATE FINAL PLAYLIST OF 100, DONT ADD DUPLICATE ALBUMS
-    final_tracks = tracks
-    final_albums = albums
-    for a, t in current.items():
-        if a not in final_albums:
-            final_albums.append(a)
-            final_tracks.append(t)
-        if len(final_tracks) >= 100:
-            break
-
-    sp.user_playlist_replace_tracks(username, playlist_id, final_tracks )
+    sp.user_playlist_replace_tracks(username, playlist_id, tracks )
 else:
     print ("Can't get token for " + username)
